@@ -1,0 +1,38 @@
+1. Code function:
+  This code deploys the trained MobileV2-Improved model file to the NVIDIA hardware Jetson Nano 
+to realize the high efficiency and low energy consumption of the deep learning model on the edge.
+
+2. How to use the code:
+(1) Required hardware
+Nvidia Jetson Nano
+(2) Required software environment
+MATLAB2020A (required).
+MATLAB Coder (required).
+Parallel Computing Toolbox (required).
+Simulink (required for generating code from Simulink models).
+Computer Vision Toolbox (recommended).
+Deep Learning Toolbox (required for deep learning).
+Embedded Coder (recommended).
+Image Processing Toolbox (recommended).
+Simulink Coder (required).
+GPU Coder Interface for Deep Learning Libraries support package (required for deep learning).
+GPU Coder Support Package for NVIDIA® GPUs (required for deployment to NVIDIA Jetson).
+GCC C/C++ compiler 6.3.x (Microsoft Visual Studio 2019)
+CUDA toolkit
+NVIDIA CUDA deep neural network library (cuDNN) for NVIDIA GPUs
+NVIDIA TensorRT™
+ARM Compute Library
+Open Source Computer Vision Library (OpenCV)
+
+3. Use process
+(1) Connect the hardware Jetson Nano and generate deployment files
+  Run the script file connect.m to generate C code for deployment or use GPU Coder to generate 
+C code for deployment based on myModelGPU.m. When GPU Coder is used, testMynet.m can be used
+to automatically detect the input variable size and generate settings Select C file, use cuDNN.
+(2) Deploy the C file on Jetson Nano and run the following code to achieve model operation
+%%Use the putFile command to copy the MobileNet-improve text file from the host to the target device.
+hwobj.putFile('MobileNet-improve.txt',hwobj.workspaceDir);
+%% uses the runApplication hardware object method to start the application on the target hardware. The application will be located in the workspace directory.
+hwobj.runApplication('myModelGPU');
+%% Use the killApplication hardware object method to terminate the running application on the target.
+hwobj.killApplication('myModelGPU');
